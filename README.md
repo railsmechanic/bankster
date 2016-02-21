@@ -14,7 +14,7 @@ The package can be installed as Hex package:
   end
   ```
 
-  2. Run `mix deps.get` fetch the package from hex
+  2. Run `mix deps.get` to fetch the package from hex
 
 
 ## Usage
