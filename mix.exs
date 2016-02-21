@@ -5,8 +5,8 @@ defmodule Bankster.Mixfile do
     [app: :bankster,
      version: "0.1.0",
      elixir: "~> 1.2",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
+     description: description,
+     package: package,
      deps: deps]
   end
 
@@ -15,12 +15,16 @@ defmodule Bankster.Mixfile do
   end
 
   defp deps do
-    []
+    [
+      {:ex_doc, "~> 0.11.4", only: [:dev]},
+      {:earmark, ">= 0.0.0", only: [:dev]}
+    ]
   end
 
   defp description do
     """
-    Bankster is an IBAN and BIC validation tool.
+    Bankster is an IBAN and BIC validation tool for Elixir.
+    It helps to validate given IBAN and BIC "numbers" before processing them.
     """
   end
 
@@ -28,7 +32,7 @@ defmodule Bankster.Mixfile do
     [
       maintainers: ["Matthias Kalb"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/railsmechanic/bankster"}
+      links: %{"GitHub" => "https://github.com/railsmechanic/bankster", "Docs" => "http://hexdocs.pm/bankster/0.1.0/"},
     ]
   end
 end

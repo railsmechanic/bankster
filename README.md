@@ -1,7 +1,6 @@
 # Bankster
 
 Bankster is an IBAN and BIC validation tool for Elixir.
-It helps to validate given IBAN and BIC "numbers" before processing them.
 
 ## Installation
 
