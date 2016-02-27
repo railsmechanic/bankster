@@ -1,10 +1,6 @@
 defmodule Bankster.Iban do
   @moduledoc """
-  Provides some IBAN related functions
-
-  ## Examples
-    iex> Bankster.Iban.valid?("INVALIDIBAN")
-    false
+  Provides some IBAN related functions.
   """
 
   @iban_rules %{
@@ -107,6 +103,10 @@ defmodule Bankster.Iban do
 
   @doc """
   Validates a given string whether it's a valid IBAN
+
+  ## Examples
+      iex> Bankster.Iban.valid?("INVALIDIBAN")
+      false
   """
   @spec valid?(binary) :: boolean
   def valid?(iban), do: is_valid?(iban)

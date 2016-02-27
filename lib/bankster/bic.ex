@@ -1,16 +1,15 @@
 defmodule Bankster.Bic do
   @moduledoc """
-  Provides some SWIFT BIC related functions
-
-  ## Examples
-    iex> Bankster.Bic.valid?("INVALIDBIC")
-    false
+  Provides some SWIFT BIC related functions.
   """
 
   @bic_validation_regex ~r/^([a-zA-Z]){4}([a-zA-Z]){2}([0-9a-zA-Z]){2}([0-9a-zA-Z]{3})?$/
 
   @doc """
   Validates a given string whether it's a valid SWIFT BIC
+  ## Example
+      iex> Bankster.Bic.valid?("INVALIDBIC")
+      false
   """
   @spec valid?(binary) :: boolean
   def valid?(bic), do: is_valid?(bic)
