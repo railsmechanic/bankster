@@ -108,7 +108,7 @@ defmodule Bankster.Iban do
       iex> Bankster.Iban.valid?("INVALIDIBAN")
       false
   """
-  @spec valid?(binary) :: boolean
+  @spec valid?(String.t) :: boolean
   def valid?(iban), do: is_valid?(iban)
 
   defp is_valid?(iban) when is_binary(iban) do

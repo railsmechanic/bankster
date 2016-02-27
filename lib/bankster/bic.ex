@@ -11,7 +11,7 @@ defmodule Bankster.Bic do
       iex> Bankster.Bic.valid?("INVALIDBIC")
       false
   """
-  @spec valid?(binary) :: boolean
+  @spec valid?(String.t) :: boolean
   def valid?(bic), do: is_valid?(bic)
 
   defp is_valid?(bic) when is_binary(bic) do
