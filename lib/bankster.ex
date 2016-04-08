@@ -25,13 +25,13 @@ defmodule Bankster do
   Validates a string whether it's a valid IBAN an returns an error tuple on invalid data.
 
   ## Examples
-      iex> Bankster.Iban.validate("INVALIDIBAN")
+      iex> Bankster.iban_validate("INVALIDIBAN")
       {:error, :invalid_country}
 
-      iex> Bankster.Iban.validate("DK838718234242342348644726815")
+      iex> Bankster.iban_validate("DK838718234242342348644726815")
       {:error, :invalid_length}
 
-      iex> Bankster.Iban.validate("DK8387188644726815")
+      iex> Bankster.iban_validate("DK8387188644726815")
       {:ok, "DK8387188644726815"}
   """
   @spec iban_validate(String.t) :: {:ok, String.t} | {:error, Atom.t}
