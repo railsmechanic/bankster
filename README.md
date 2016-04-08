@@ -47,7 +47,7 @@ iex> Bankster.Iban.validate("DK83 8718 8644 7268 15")
 
 ### Validate BICs
 Validating BICs works the same way as already shown for IBANs.
-So you can either use `Bankster.bic_valid?("YOURBIC")` or `Bankster.Bic.valid?("YOURBIC")` to validate BICs.
+So you can either use `Bankster.bic_valid?/1` or `Bankster.Bic.valid?/1` to validate BICs.
 
 ```elixir
 iex> Bankster.bic_valid?("NOTVALID")
