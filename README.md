@@ -20,7 +20,7 @@ The package can be installed as Hex package:
 ## Usage
 
 ### Validate IBANs
-You can either use `Bankster.iban_valid?("YOURIBAN")` or `Bankster.Iban.valid?("YOURIBAN")` to validate IBANs.
+You can either use `Bankster.iban_valid?/1` or `Bankster.Iban.valid?/1` to validate IBANs.
 
 ```elixir
 iex> Bankster.iban_valid?("NOTVALID")
@@ -28,6 +28,21 @@ false
 
 iex> Bankster.Iban.valid?("NOTVALID")
 false
+```
+
+### Validation with errors
+Beside the boolean validation function, Bankster offers a validation function which returns the corresponding error.
+Like the other validation, you can use `Bankster.iban_validate/1` or `Bankster.Iban.validate/1` to validate IBANs.
+
+```elixir
+iex> Bankster.iban_validate("NOTVALID")
+{:error, :invalid_country}
+
+iex> Bankster.Iban.validate("DK8387188644726815223423423423423423423")
+{:error, :invalid_length}
+
+iex> Bankster.Iban.validate("DK83 8718 8644 7268 15")
+{:ok, "DK8387188644726815"}
 ```
 
 ### Validate BICs
