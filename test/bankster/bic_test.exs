@@ -1,11 +1,14 @@
 defmodule Bankster.Bic.BicTest do
   use ExUnit.Case
 
-  test "valid SWIFT BICs" do
-    for bic <- ["RBOSGGSX", "RZTIAT22263", "BCEELULL", "MARKDEFF", "GENODEF1JEV", "UBSWCHZH80A", "CEDELULLXXX"], do: assert Bankster.Bic.valid?(bic) == true
-  end
+  @valid_bics ["RBOSGGSX", "RZTIAT22263", "BCEELULL", "MARKDEFF", "GENODEF1JEV", "UBSWCHZH80A", "CEDELULLXXX"]
+  @invalid_bics ["CE1EL2LLFFF", "E31DCLLFFF", "", " ", nil]
 
-  test "invalid SWIFT BICs" do
-    for bic <- ["CE1EL2LLFFF", "E31DCLLFFF", "", " ", nil], do: assert Bankster.Bic.valid?(bic) == false
+  test "valid?/1" do
+    ## -- VALID BICS
+    for bic <- @valid_bics, do: assert Bankster.Bic.valid?(bic) == true
+
+    ## -- INVALID BICS
+    for bic <- @invalid_bics, do: assert Bankster.Bic.valid?(bic) == false
   end
 end
