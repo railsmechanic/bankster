@@ -107,7 +107,7 @@ defmodule Bankster.Iban do
 
   ## Examples
       iex> Bankster.Iban.format_compact("DK8     38 7188 64472     6815   ")
-      {:ok, "DK8387188644726815"}
+      "DK8387188644726815"
   """
   @spec format_compact(String.t) :: String.t
   def format_compact(iban) do
@@ -199,7 +199,7 @@ defmodule Bankster.Iban do
       iban_violates_checksum?(iban) ->
         {:error, :invalid_checksum}
       true ->
-        {:ok, parse(iban)}
+        {:ok, format_compact(iban)}
     end
   end
 
@@ -217,7 +217,7 @@ defmodule Bankster.Iban do
   def valid?(iban) do
     case validate(iban) do
       {:ok, _}    -> true
-      {:error, _} -> false
+      _ -> false
     end
   end
 

@@ -3,7 +3,7 @@ defmodule Bankster.Mixfile do
 
   def project do
     [app: :bankster,
-     version: "0.2.1",
+     version: "0.2.2",
      elixir: "~> 1.2",
      description: description,
      package: package,
@@ -31,7 +31,7 @@ defmodule Bankster.Mixfile do
     [
       maintainers: ["Matthias Kalb"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/railsmechanic/bankster", "Docs" => "http://hexdocs.pm/bankster/0.1.0/"},
+      links: %{"GitHub" => "https://github.com/railsmechanic/bankster"},
     ]
   end
 end
