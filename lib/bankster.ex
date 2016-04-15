@@ -23,7 +23,6 @@ defmodule Bankster do
 
   @doc """
   Validates a string whether it's a valid IBAN an returns an error tuple on invalid data.
-
   ## Example
       iex> Bankster.iban_validate("INVALIDIBAN")
       {:error, :invalid_country}
