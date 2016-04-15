@@ -131,7 +131,7 @@ defmodule Bankster.Iban do
 
 
   @doc """
-  Formats and returns a given IBAN in pretty format.
+  Returns the country code of the given IBAN.
 
   ## Examples
       iex> Bankster.Iban.country_code("DK8387188644726815")
@@ -146,7 +146,7 @@ defmodule Bankster.Iban do
 
 
   @doc """
-  Formats and returns a given IBAN in pretty format.
+  Returns the BBAN of the given IBAN.
 
   ## Examples
       iex> Bankster.Iban.bban("DK8387188644726815")
@@ -161,7 +161,7 @@ defmodule Bankster.Iban do
 
 
   @doc """
-  Formats and returns a given IBAN in pretty format.
+  Returns the size/length of the given IBAN.
 
   ## Examples
       iex> Bankster.Iban.size("DK 8387   188644     726815")

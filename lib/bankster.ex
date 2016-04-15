@@ -13,9 +13,9 @@ defmodule Bankster do
   defdelegate bic_valid?(iban), to: Bankster.Bic, as: :valid?
 
   @doc """
-  Validates a given string whether it's a valid SWIFT BIC
+  Validates a given string whether it's a valid IBAN
   ## Example
-      iex> Bankster.iban_valid?("INVALIDBIC")
+      iex> Bankster.iban_valid?("INVALIDIBAN")
       false
   """
   @spec iban_valid?(String.t) :: boolean
