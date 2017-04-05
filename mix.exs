@@ -5,9 +5,9 @@ defmodule Bankster.Mixfile do
     [app: :bankster,
      version: "0.2.2",
      elixir: "~> 1.2",
-     description: description,
-     package: package,
-     deps: deps]
+     description: description(),
+     package: package(),
+     deps: deps()]
   end
 
   def application do
