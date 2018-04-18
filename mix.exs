@@ -2,12 +2,17 @@ defmodule Bankster.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :bankster,
-     version: "0.2.2",
-     elixir: "~> 1.2",
-     description: description(),
-     package: package(),
-     deps: deps()]
+    [
+      app: :bankster,
+      version: "0.3.0",
+      elixir: "~> 1.4",
+      start_permanent: Mix.env() == :prod,
+      description: description(),
+      package: package(),
+      deps: deps(),
+      name: "Bankster",
+      source_url: "https://github.com/railsmechanic/bankster"
+    ]
   end
 
   def application do
@@ -16,22 +21,20 @@ defmodule Bankster.Mixfile do
 
   defp deps do
     [
-      {:ex_doc, "~> 0.11.4", only: [:dev]},
-      {:earmark, ">= 0.0.0", only: [:dev]}
+      {:ex_doc, "~> 0.18.3", only: [:dev]},
+      {:earmark, "~> 1.2.5", only: [:dev]}
     ]
   end
 
   defp description do
-    """
-    Bankster is an IBAN and BIC validation tool for Elixir.
-    """
+    "Bankster is an IBAN and BIC validation tool for Elixir."
   end
 
   defp package do
     [
       maintainers: ["Matthias Kalb"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/railsmechanic/bankster"},
+      links: %{"GitHub" => "https://github.com/railsmechanic/bankster"}
     ]
   end
 end

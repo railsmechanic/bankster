@@ -11,11 +11,11 @@ defmodule Bankster.Bic do
       iex> Bankster.Bic.valid?("INVALIDBIC")
       false
   """
-  @spec valid?(String.t) :: boolean
+  @spec valid?(String.t()) :: boolean
   def valid?(bic), do: is_valid?(bic)
 
-  defp is_valid?(bic) when is_binary(bic) do
-    Regex.match?(@bic_validation_regex, String.replace(bic, ~r/\s*/, ""))
-  end
+  defp is_valid?(bic) when is_binary(bic),
+    do: Regex.match?(@bic_validation_regex, String.replace(bic, ~r/\s*/, ""))
+
   defp is_valid?(_), do: false
 end

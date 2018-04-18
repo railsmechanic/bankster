@@ -9,7 +9,7 @@ defmodule Bankster do
       iex> Bankster.bic_valid?("INVALIDBIC")
       false
   """
-  @spec bic_valid?(String.t) :: boolean
+  @spec bic_valid?(String.t()) :: boolean
   defdelegate bic_valid?(iban), to: Bankster.Bic, as: :valid?
 
   @doc """
@@ -18,7 +18,7 @@ defmodule Bankster do
       iex> Bankster.iban_valid?("INVALIDIBAN")
       false
   """
-  @spec iban_valid?(String.t) :: boolean
+  @spec iban_valid?(String.t()) :: boolean
   defdelegate iban_valid?(iban), to: Bankster.Iban, as: :valid?
 
   @doc """
@@ -33,6 +33,6 @@ defmodule Bankster do
       iex> Bankster.iban_validate("DK8387188644726815")
       {:ok, "DK8387188644726815"}
   """
-  @spec iban_validate(String.t) :: {:ok, String.t} | {:error, Atom.t}
+  @spec iban_validate(String.t()) :: {:ok, String.t()} | {:error, Atom.t()}
   defdelegate iban_validate(iban), to: Bankster.Iban, as: :validate
 end

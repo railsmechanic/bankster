@@ -295,7 +295,7 @@ defmodule Bankster.Iban.IbanTest do
     "AD 9764 7827 7801 7799 5493 45",
     "AD 4079 7399 3406 0166 9341 90",
     "AD 3210 4469 1482 4799 2603 35",
-    "AD 1781 4383 5358 8817 7271 22",
+    "AD 1781 4383 5358 8817 7271 22"
   ]
 
   @invalid_ibans [
@@ -312,63 +312,117 @@ defmodule Bankster.Iban.IbanTest do
 
   test "format_compact/1" do
     # Unformated IBANs
-    for iban <- @unformated_ibans, do: assert Bankster.Iban.format_compact(iban) == (String.replace(iban, ~r/\s*/, "") |> String.upcase)
+    for iban <- @unformated_ibans,
+        do:
+          assert(
+            Bankster.Iban.format_compact(iban) ==
+              String.replace(iban, ~r/\s*/, "") |> String.upcase()
+          )
 
     # Formated IBANs
-    for iban <- @formated_ibans, do: assert Bankster.Iban.format_compact(iban) == (String.replace(iban, ~r/\s*/, "") |> String.upcase)
+    for iban <- @formated_ibans,
+        do:
+          assert(
+            Bankster.Iban.format_compact(iban) ==
+              String.replace(iban, ~r/\s*/, "") |> String.upcase()
+          )
   end
 
   test "format_pretty/1" do
     # Unformated IBANs
-    for iban <- @unformated_ibans, do: assert Bankster.Iban.format_pretty(iban) == (Regex.scan(~r/.{1,4}/, (String.replace(iban, ~r/\s*/, "") |> String.upcase)) |> List.flatten |> Enum.join(" "))
+    for iban <- @unformated_ibans,
+        do:
+          assert(
+            Bankster.Iban.format_pretty(iban) ==
+              Regex.scan(~r/.{1,4}/, String.replace(iban, ~r/\s*/, "") |> String.upcase())
+              |> List.flatten()
+              |> Enum.join(" ")
+          )
 
     # Formated IBANs
-    for iban <- @formated_ibans, do: assert Bankster.Iban.format_pretty(iban) == (Regex.scan(~r/.{1,4}/, (String.replace(iban, ~r/\s*/, "") |> String.upcase)) |> List.flatten |> Enum.join(" "))
+    for iban <- @formated_ibans,
+        do:
+          assert(
+            Bankster.Iban.format_pretty(iban) ==
+              Regex.scan(~r/.{1,4}/, String.replace(iban, ~r/\s*/, "") |> String.upcase())
+              |> List.flatten()
+              |> Enum.join(" ")
+          )
   end
 
   test "country_code/1" do
     # Unformated IBANs
-    for iban <- @unformated_ibans, do: assert Bankster.Iban.country_code(iban) == (String.replace(iban, ~r/\s*/, "") |> String.upcase |> String.slice(0..1))
+    for iban <- @unformated_ibans,
+        do:
+          assert(
+            Bankster.Iban.country_code(iban) ==
+              String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(0..1)
+          )
 
     # Formated IBANs
-    for iban <- @formated_ibans, do: assert Bankster.Iban.country_code(iban) == (String.replace(iban, ~r/\s*/, "") |> String.upcase |> String.slice(0..1))
+    for iban <- @formated_ibans,
+        do:
+          assert(
+            Bankster.Iban.country_code(iban) ==
+              String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(0..1)
+          )
   end
 
   test "bban/1" do
     # Unformated IBANs
-    for iban <- @unformated_ibans, do: assert Bankster.Iban.bban(iban) == (String.replace(iban, ~r/\s*/, "") |> String.upcase |> String.slice(2..3))
+    for iban <- @unformated_ibans,
+        do:
+          assert(
+            Bankster.Iban.bban(iban) ==
+              String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(2..3)
+          )
 
     # Formated IBANs
-    for iban <- @formated_ibans, do: assert Bankster.Iban.bban(iban) == (String.replace(iban, ~r/\s*/, "") |> String.upcase |> String.slice(2..3))
+    for iban <- @formated_ibans,
+        do:
+          assert(
+            Bankster.Iban.bban(iban) ==
+              String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(2..3)
+          )
   end
 
   test "size/1" do
     # Unformated IBANs
-    for iban <- @unformated_ibans, do: assert Bankster.Iban.size(iban) == (String.replace(iban, ~r/\s*/, "") |> String.upcase |> String.length)
+    for iban <- @unformated_ibans,
+        do:
+          assert(
+            Bankster.Iban.size(iban) ==
+              String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.length()
+          )
 
     # Formated IBANs
-    for iban <- @formated_ibans, do: assert Bankster.Iban.size(iban) == (String.replace(iban, ~r/\s*/, "") |> String.upcase |> String.length)
+    for iban <- @formated_ibans,
+        do:
+          assert(
+            Bankster.Iban.size(iban) ==
+              String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.length()
+          )
   end
 
   test "valid?/1" do
     # Unformated IBANs
-    for iban <- @unformated_ibans, do: assert Bankster.Iban.valid?(iban) == true
+    for iban <- @unformated_ibans, do: assert(Bankster.Iban.valid?(iban) == true)
 
     # Formated IBANs
-    for iban <- @formated_ibans, do: assert Bankster.Iban.valid?(iban) == true
+    for iban <- @formated_ibans, do: assert(Bankster.Iban.valid?(iban) == true)
 
     # Invalid IBANs
-    for iban <- @invalid_ibans, do: assert Bankster.Iban.valid?(iban) == false
+    for iban <- @invalid_ibans, do: assert(Bankster.Iban.valid?(iban) == false)
   end
 
   test "validate/1" do
     # Unformated IBANs
-    for iban <- @unformated_ibans, do: assert {:ok, _} = Bankster.Iban.validate(iban)
+    for iban <- @unformated_ibans, do: assert({:ok, _} = Bankster.Iban.validate(iban))
 
     # Formated IBANs
-    for iban <- @formated_ibans, do: assert {:ok, _} = Bankster.Iban.validate(iban)
+    for iban <- @formated_ibans, do: assert({:ok, _} = Bankster.Iban.validate(iban))
 
     # Invalid IBANs
-    for iban <- @invalid_ibans, do: assert {:error, _} = Bankster.Iban.validate(iban)
+    for iban <- @invalid_ibans, do: assert({:error, _} = Bankster.Iban.validate(iban))
   end
 end

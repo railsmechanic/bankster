@@ -295,7 +295,7 @@ defmodule BanksterTest do
     "AD 9764 7827 7801 7799 5493 45",
     "AD 4079 7399 3406 0166 9341 90",
     "AD 3210 4469 1482 4799 2603 35",
-    "AD 1781 4383 5358 8817 7271 22",
+    "AD 1781 4383 5358 8817 7271 22"
   ]
 
   @invalid_ibans [
@@ -310,37 +310,51 @@ defmodule BanksterTest do
     nil
   ]
 
-  @valid_bics ["RBOSGGSX", "RZTIAT22263", "BCEELULL", "MARKDEFF", "GENODEF1JEV", "UBSWCHZH80A", "CEDELULLXXX"]
+  @valid_bics [
+    "RBOSGGSX",
+    "RZTIAT22263",
+    "BCEELULL",
+    "MARKDEFF",
+    "GENODEF1JEV",
+    "UBSWCHZH80A",
+    "CEDELULLXXX"
+  ]
 
   @invalid_bics ["CE1EL2LLFFF", "E31DCLLFFF", "", " ", nil]
 
   test "bic_valid?/1" do
     # Valid BICs
-    for bic <- @valid_bics, do: assert Bankster.bic_valid?(bic) == Bankster.Bic.valid?(bic)
+    for bic <- @valid_bics, do: assert(Bankster.bic_valid?(bic) == Bankster.Bic.valid?(bic))
 
     # Invalid BICs
-    for bic <- @invalid_bics, do: assert Bankster.bic_valid?(bic) == Bankster.Bic.valid?(bic)
+    for bic <- @invalid_bics, do: assert(Bankster.bic_valid?(bic) == Bankster.Bic.valid?(bic))
   end
 
   test "iban_valid?/1" do
     # Unformated IBANs
-    for iban <- @unformated_ibans, do: assert Bankster.iban_valid?(iban) == Bankster.Iban.valid?(iban)
+    for iban <- @unformated_ibans,
+        do: assert(Bankster.iban_valid?(iban) == Bankster.Iban.valid?(iban))
 
     # Formated IBANs
-    for iban <- @formated_ibans, do: assert Bankster.iban_valid?(iban) == Bankster.Iban.valid?(iban)
+    for iban <- @formated_ibans,
+        do: assert(Bankster.iban_valid?(iban) == Bankster.Iban.valid?(iban))
 
     # Invalid IBANs
-    for iban <- @invalid_ibans, do: assert Bankster.iban_valid?(iban) == Bankster.Iban.valid?(iban)
+    for iban <- @invalid_ibans,
+        do: assert(Bankster.iban_valid?(iban) == Bankster.Iban.valid?(iban))
   end
 
   test "iban_validate/1" do
     # Unformated IBANs
-    for iban <- @unformated_ibans, do: assert Bankster.iban_validate(iban) == Bankster.Iban.validate(iban)
+    for iban <- @unformated_ibans,
+        do: assert(Bankster.iban_validate(iban) == Bankster.Iban.validate(iban))
 
     # Formated IBANs
-    for iban <- @formated_ibans, do: assert Bankster.iban_validate(iban) == Bankster.Iban.validate(iban)
+    for iban <- @formated_ibans,
+        do: assert(Bankster.iban_validate(iban) == Bankster.Iban.validate(iban))
 
     # Invalid IBANs
-    for iban <- @invalid_ibans, do: assert Bankster.iban_validate(iban) == Bankster.Iban.validate(iban)
+    for iban <- @invalid_ibans,
+        do: assert(Bankster.iban_validate(iban) == Bankster.Iban.validate(iban))
   end
 end
