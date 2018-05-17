@@ -1,4 +1,4 @@
-# Bankster
+# Bankster [![Build Status](https://travis-ci.org/railsmechanic/bankster.svg?branch=master)](https://travis-ci.org/railsmechanic/bankster)
 
 Helps validating IBAN account numbers and BIC numbers.
 Thats all for the great language Elixir.
