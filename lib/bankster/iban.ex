@@ -3,6 +3,8 @@ defmodule Bankster.Iban do
   Provides some IBAN related functions.
   """
 
+  @general_iban_format_rule ~r/^[0-9A-Z]*$/i
+
   @iban_rules %{
     "AA" => %{length: 16, rule: ~r/^[0-9A-Z]{12}$/i},
     "AD" => %{length: 24, rule: ~r/^[0-9]{8}[0-9A-Z]{12}$/i},
@@ -240,7 +242,7 @@ defmodule Bankster.Iban do
       iban_violates_length?(iban) ->
         {:error, :invalid_length}
 
-      iban_violates_match?(iban) ->
+      iban_violates_match?(iban) || iban_violates_general_match?(iban) ->
         {:error, :invalid_format}
 
       iban_violates_checksum?(iban) ->
@@ -290,6 +292,9 @@ defmodule Bankster.Iban do
       false
     end
   end
+
+  @spec iban_violates_general_match?(String.t()) :: boolean
+  defp iban_violates_general_match?(iban), do: !Regex.match?(@general_iban_format_rule, format_default(iban))
 
   @spec iban_violates_checksum?(String.t()) :: boolean
   defp iban_violates_checksum?(iban) do
