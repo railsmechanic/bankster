@@ -3,8 +3,6 @@ defmodule Bankster.Iban do
   Provides some IBAN related functions.
   """
 
-  @general_iban_format_rule ~r/^[0-9A-Z]*$/i
-
   @iban_rules %{
     "AA" => %{length: 16, rule: ~r/^[0-9A-Z]{12}$/i},
     "AD" => %{length: 24, rule: ~r/^[0-9]{8}[0-9A-Z]{12}$/i},
@@ -236,13 +234,16 @@ defmodule Bankster.Iban do
   @spec validate(String.t()) :: {:ok, String.t()} | {:error, Atom.t()}
   def validate(iban) do
     cond do
+      iban_violates_format?(iban) ->
+        {:error, :invalid_format}
+
       iban_violates_country?(iban) ->
         {:error, :invalid_country}
 
       iban_violates_length?(iban) ->
         {:error, :invalid_length}
 
-      iban_violates_match?(iban) || iban_violates_general_match?(iban) ->
+      iban_violates_country_rule?(iban) ->
         {:error, :invalid_format}
 
       iban_violates_checksum?(iban) ->
@@ -273,9 +274,12 @@ defmodule Bankster.Iban do
   defp format_default(iban) do
     iban
     |> to_string()
-    |> String.replace(~r/\s*/, "")
+    |> String.replace(~r/\s*/i, "")
     |> String.upcase()
   end
+
+  @spec iban_violates_format?(String.t()) :: boolean
+  defp iban_violates_format?(iban), do: Regex.match?(~r/[^A-Z0-9]/i, format_default(iban))
 
   @spec iban_violates_country?(String.t()) :: boolean
   defp iban_violates_country?(iban), do: !Map.has_key?(@iban_rules, country_code(iban))
@@ -284,17 +288,14 @@ defmodule Bankster.Iban do
   defp iban_violates_length?(iban),
     do: size(iban) != get_in(@iban_rules, [country_code(iban), :length])
 
-  @spec iban_violates_match?(String.t()) :: boolean
-  defp iban_violates_match?(iban) do
+  @spec iban_violates_country_rule?(String.t()) :: boolean
+  defp iban_violates_country_rule?(iban) do
     if iban_rule = get_in(@iban_rules, [country_code(iban), :rule]) do
       !Regex.match?(iban_rule, String.slice(format_default(iban), 4..-1))
     else
       false
     end
   end
-
-  @spec iban_violates_general_match?(String.t()) :: boolean
-  defp iban_violates_general_match?(iban), do: !Regex.match?(@general_iban_format_rule, format_default(iban))
 
   @spec iban_violates_checksum?(String.t()) :: boolean
   defp iban_violates_checksum?(iban) do
