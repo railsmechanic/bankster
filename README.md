@@ -1,7 +1,9 @@
 # Bankster [![Build Status](https://travis-ci.org/railsmechanic/bankster.svg?branch=master)](https://travis-ci.org/railsmechanic/bankster)
 
-Helps validating IBAN account numbers and BIC numbers.
-Thats all for the great language Elixir.
+An easy to use Elixir validator for IBAN account and BIC numbers. It includes IBAN rules for 115 countries and validation for BIC numbers. 
+
+- IBAN validation is done using format, country, length and checksum.  
+- BIC validation is done using format.
 
 ## Installation
 
