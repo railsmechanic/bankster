@@ -1,8 +1,8 @@
 # Bankster [![Build Status](https://travis-ci.org/railsmechanic/bankster.svg?branch=master)](https://travis-ci.org/railsmechanic/bankster)
 
-An easy to use Elixir validator for IBAN account and BIC numbers. It includes IBAN rules for 115 countries and validation for BIC numbers. 
+An easy to use Elixir validator for IBAN account and BIC numbers. It includes IBAN rules for 115 countries and validation for BIC numbers.
 
-- IBAN validation is done using format, country, length and checksum.  
+- IBAN validation is done using format, country, length and checksum.
 - BIC validation is done using format.
 
 ## Installation
@@ -59,6 +59,10 @@ false
 iex> Bankster.Bic.valid?("NOTVALID")
 false
 ```
+
+### More interesting functions
+Bankster has even more interesting functions.
+Please have a look at the hex documentation for the modules `Bankster.Iban` [(docs)](https://hexdocs.pm/bankster/Bankster.Iban.html) and `Bankster.Bic` [(docs)](https://hexdocs.pm/bankster/Bankster.Bic.html).
 
 ## License
 Bankster source code is released under MIT License. Check LICENSE file for more information.
