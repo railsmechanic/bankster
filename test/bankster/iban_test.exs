@@ -369,6 +369,31 @@ defmodule Bankster.Iban.IbanTest do
           )
   end
 
+  test "supported_countries/0" do
+    supported_countries = Bankster.Iban.supported_countries()
+    assert(is_list(supported_countries) == true)
+    assert(Enum.count(supported_countries) == 116)
+  end
+
+  test "supported_country?/1" do
+    # Unformated IBANs
+    for iban <- @unformated_ibans do
+      country_code = String.slice(iban, 0..1)
+      assert(Bankster.Iban.supported_country?(country_code) == true)
+    end
+
+    # Formated IBANs
+    for iban <- @formated_ibans do
+      country_code = String.slice(iban, 0..1)
+      assert(Bankster.Iban.supported_country?(country_code) == true)
+    end
+
+    # Invalid IBANs
+    for invalid_country_code <- ["XX", "BB", "ZZ", "12", "", 12, nil] do
+      assert(Bankster.Iban.supported_country?(invalid_country_code) == false)
+    end
+  end
+
   test "bban/1" do
     # Unformated IBANs
     for iban <- @unformated_ibans,
