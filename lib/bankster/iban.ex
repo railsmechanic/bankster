@@ -191,6 +191,34 @@ defmodule Bankster.Iban do
   end
 
   @doc """
+  Returns the country codes of the supported countries.
+
+  ## Examples
+      iex> Bankster.Iban.supported_countries()
+      ["SM", "KZ", "SN", "BA", "GA", "KW", "MU", ...]
+  """
+  @spec supported_countries() :: list(String.t())
+  def supported_countries, do: Map.keys(@iban_rules)
+
+  @doc """
+  Validates whether the given country code is within the supported countries.
+
+  ## Examples
+      iex> Bankster.Iban.supported_country?("DE")
+      true
+
+      iex> Bankster.Iban.supported_country?("XYZ")
+      false
+  """
+  @spec supported_country?(String.t()) :: boolean
+  def supported_country?(country_code)
+
+  def supported_country?(country_code) when is_binary(country_code),
+    do: Map.has_key?(@iban_rules, format_default(country_code))
+
+  def supported_country?(_invalid), do: false
+
+  @doc """
   Returns the BBAN of the given IBAN.
 
   ## Examples

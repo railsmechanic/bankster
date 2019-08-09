@@ -4,7 +4,7 @@ defmodule Bankster.Mixfile do
   def project do
     [
       app: :bankster,
-      version: "0.3.1",
+      version: "0.3.2",
       elixir: "~> 1.4",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -21,8 +21,8 @@ defmodule Bankster.Mixfile do
 
   defp deps do
     [
-      {:ex_doc, "~> 0.18.3", only: [:dev]},
-      {:earmark, "~> 1.2.5", only: [:dev]}
+      {:ex_doc, "~> 0.21.1", only: [:dev]},
+      {:earmark, "~> 1.3.5", only: [:dev]}
     ]
   end
 
