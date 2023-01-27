@@ -369,6 +369,24 @@ defmodule Bankster.Iban.IbanTest do
     end
   end
 
+  test "checksum/1" do
+    # Unformated IBANs
+    for iban <- @unformated_ibans do
+      assert(
+        Bankster.Iban.checksum(iban) ==
+          String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(2..3)
+      )
+    end
+
+    # Formated IBANs
+    for iban <- @formated_ibans do
+      assert(
+        Bankster.Iban.checksum(iban) ==
+          String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(2..3)
+      )
+    end
+  end
+
   test "supported_countries/0" do
     assert is_list(Bankster.Iban.supported_countries()) == true
     assert length(Bankster.Iban.supported_countries()) == 116
@@ -393,7 +411,7 @@ defmodule Bankster.Iban.IbanTest do
     for iban <- @unformated_ibans do
       assert(
         Bankster.Iban.bban(iban) ==
-          String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(2..3)
+          String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(4..-1)
       )
     end
 
@@ -401,7 +419,7 @@ defmodule Bankster.Iban.IbanTest do
     for iban <- @formated_ibans do
       assert(
         Bankster.Iban.bban(iban) ==
-          String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(2..3)
+          String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(4..-1)
       )
     end
   end

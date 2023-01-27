@@ -191,6 +191,20 @@ defmodule Bankster.Iban do
   end
 
   @doc """
+  Returns the checksum of the given IBAN.
+
+  ## Examples
+      iex> Bankster.Iban.checksum("DK8387188644726815")
+      83
+  """
+  @spec checksum(String.t()) :: String.t()
+  def checksum(iban) do
+    iban
+    |> format_default()
+    |> String.slice(2..3)
+  end
+
+  @doc """
   Returns the country codes of the supported countries.
 
   ## Examples
@@ -223,13 +237,13 @@ defmodule Bankster.Iban do
 
   ## Examples
       iex> Bankster.Iban.bban("DK8387188644726815")
-      "83"
+      "87188644726815"
   """
   @spec bban(String.t()) :: String.t()
   def bban(iban) do
     iban
     |> format_default()
-    |> String.slice(2..3)
+    |> String.slice(4..-1)
   end
 
   @doc """
@@ -327,12 +341,16 @@ defmodule Bankster.Iban do
 
   @spec iban_violates_checksum?(String.t()) :: boolean
   defp iban_violates_checksum?(iban) do
-    for(
-      <<c <- String.slice(format_default(iban), 4..-1) <> String.slice(format_default(iban), 0, 4)>>,
-      into: "",
-      do: @replacements[<<c>>] || <<c>>
-    )
-    |> String.to_integer()
-    |> rem(97) !== 1
+    remainder =
+      for(<<c <- bban(iban) <> country_code(iban) <> "00">>, into: "", do: @replacements[<<c>>] || <<c>>)
+      |> String.to_integer()
+      |> rem(97)
+
+    calculated_checksum =
+      (98 - remainder)
+      |> Integer.to_string()
+      |> String.pad_leading(2, "0")
+
+    calculated_checksum !== checksum(iban)
   end
 end
