@@ -35,4 +35,17 @@ defmodule Bankster do
   """
   @spec iban_validate(String.t()) :: {:ok, String.t()} | {:error, Atom.t()}
   defdelegate iban_validate(iban), to: Bankster.Iban, as: :validate
+
+  @doc """
+  Attempts to find the BIC associated with a valid IBAN. Returns an error tuple on invalid data.
+  Does not support all countries nor all banks in supported countries. Patches are welcome..
+  ## Example
+      iex(1)> Bankster.bic_calculate("NL91ABNA0417164300")
+      {:ok, "ABNANL2A XXX"}
+
+      iex(2)> Bankster.bic_calculate("AL86751639367318444714198669")
+      {:error, :unsupported_country}
+  """
+  @spec bic_calculate(String.t()) :: {:ok, String.t()} | {:error, Atom.t()}
+  defdelegate bic_calculate(iban), to: Bankster.Bic, as: :calculate_bic_from_iban 
 end

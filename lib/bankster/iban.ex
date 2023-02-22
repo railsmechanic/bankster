@@ -72,7 +72,7 @@ defmodule Bankster.Iban do
     "LT" => %{length: 20, rule: ~r/^([0-9]{5})[0-9]{11}$/i},
     "LU" => %{length: 20, rule: ~r/^([0-9]{3})[0-9A-Z]{13}$/i},
     "LV" => %{length: 21, rule: ~r/^([A-Z]{4})[0-9A-Z]{13}$/i},
-    "LY" => %{length: 25, rule: ~r/^([0-9]{3})([0-9]{3})[0-9]{15}$/i} # added
+    "LY" => %{length: 25, rule: ~r/^([0-9]{3})([0-9]{3})[0-9]{15}$/i},
     "MA" => %{length: 28, rule: ~r/^[0-9]{24}$/i}, # No auto-BIC
     "MC" => %{length: 27, rule: ~r/^([0-9]{5})([0-9]{5})[0-9A-Z]{11}[0-9]{2}$/i},
     "MD" => %{length: 24, rule: ~r/^([0-9A-Z]{2})[0-9A-Z]{18}$/i},
@@ -103,7 +103,7 @@ defmodule Bankster.Iban do
     "RS" => %{length: 22, rule: ~r/^([0-9]{3})[0-9]{15}$/i},
     "SA" => %{length: 24, rule: ~r/^([0-9]{2})[0-9A-Z]{18}$/i},
     "SC" => %{length: 31, rule: ~r/^([A-Z]{4}[0-9]{2})([0-9]{2})[0-9]{16}[A-Z]{3}$/i},
-    "SD" => %{length: 18, rule: ~r/^([0-9]{2})[0-9]{12}$/i}
+    "SD" => %{length: 18, rule: ~r/^([0-9]{2})[0-9]{12}$/i},
     "SE" => %{length: 24, rule: ~r/^([0-9]{3})[0-9]{17}$/i},
     "SI" => %{length: 19, rule: ~r/^([0-9]{2})([0-9]{3})[0-9]{10}$/i},
     "SK" => %{length: 24, rule: ~r/^([0-9]{4})[0-9]{16}$/i},
@@ -310,6 +310,9 @@ defmodule Bankster.Iban do
   """
   @spec valid?(String.t()) :: boolean
   def valid?(iban), do: match?({:ok, _}, validate(iban))
+
+  def iban_rules(), do: @iban_rules
+
 
   ##################################################
   ## HELPERS
