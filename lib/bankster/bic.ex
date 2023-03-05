@@ -68,6 +68,7 @@ defmodule Bankster.Bic do
       {:ok, mapping[bank]}
     else
       {:error, :unsupported_bank}
+    end
   end
 
   @spec basic_mapping_nested(%{required(String.t()) => %{required(String.t()) => String.t()}}, String.t(), String.t()) :: {:ok, String.t()} | {:error, :unsupported_bank}
