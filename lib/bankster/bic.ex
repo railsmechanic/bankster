@@ -77,5 +77,5 @@ defmodule Bankster.Bic do
     else
       {:error, :unsupported_bank}
     end
-end
+  end
 end
