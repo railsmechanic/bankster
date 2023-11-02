@@ -411,7 +411,7 @@ defmodule Bankster.Iban.IbanTest do
     for iban <- @unformated_ibans do
       assert(
         Bankster.Iban.bban(iban) ==
-          String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(4..-1)
+          String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(4..-1//1)
       )
     end
 
@@ -419,7 +419,7 @@ defmodule Bankster.Iban.IbanTest do
     for iban <- @formated_ibans do
       assert(
         Bankster.Iban.bban(iban) ==
-          String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(4..-1)
+          String.replace(iban, ~r/\s*/, "") |> String.upcase() |> String.slice(4..-1//1)
       )
     end
   end
