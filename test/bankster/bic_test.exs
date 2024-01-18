@@ -1,6 +1,7 @@
 defmodule Bankster.Bic.BicTest do
   use ExUnit.Case
 
+  ## -- Module constants
   @valid_bics [
     "RBOSGGSX",
     "RZTIAT22263",
@@ -12,6 +13,7 @@ defmodule Bankster.Bic.BicTest do
   ]
   @invalid_bics ["CE1EL2LLFFF", "E31DCLLFFF", "", " ", nil]
 
+  ## -- Test cases
   test "valid?/1" do
     ## -- VALID BICS
     for bic <- @valid_bics, do: assert(Bankster.Bic.valid?(bic) == true)

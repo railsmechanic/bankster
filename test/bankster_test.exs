@@ -1,6 +1,8 @@
 defmodule BanksterTest do
   use ExUnit.Case
 
+  ## -- Module constants
+
   # IBAN list from http://www.mobilefish.com/download/iban/random_generated_iban.txt
   @unformated_ibans [
     "AL86751639367318444714198669",
@@ -322,6 +324,7 @@ defmodule BanksterTest do
 
   @invalid_bics ["CE1EL2LLFFF", "E31DCLLFFF", "", " ", nil]
 
+  ## -- Test cases
   test "bic_valid?/1" do
     # Valid BICs
     for bic <- @valid_bics, do: assert(Bankster.bic_valid?(bic) == Bankster.Bic.valid?(bic))

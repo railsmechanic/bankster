@@ -1,6 +1,8 @@
 defmodule Bankster.Iban.IbanTest do
   use ExUnit.Case
 
+  ## -- Module constants
+
   # IBAN list from http://www.mobilefish.com/download/iban/random_generated_iban.txt
   @unformated_ibans [
     "AL86751639367318444714198669",
@@ -311,6 +313,7 @@ defmodule Bankster.Iban.IbanTest do
     nil
   ]
 
+  ## -- Test cases
   test "format_compact/1" do
     # Unformated IBANs
     for iban <- @unformated_ibans do
