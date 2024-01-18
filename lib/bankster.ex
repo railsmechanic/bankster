@@ -3,13 +3,14 @@ defmodule Bankster do
   The main API for Bankster.
   """
 
+  ## -- Functions
   @doc """
   Validates a given string whether it's a valid SWIFT BIC
   ## Example
       iex> Bankster.bic_valid?("INVALIDBIC")
       false
   """
-  @spec bic_valid?(String.t()) :: boolean
+  @spec bic_valid?(binary()) :: boolean()
   defdelegate bic_valid?(iban), to: Bankster.Bic, as: :valid?
 
   @doc """
@@ -18,7 +19,7 @@ defmodule Bankster do
       iex> Bankster.iban_valid?("INVALIDIBAN")
       false
   """
-  @spec iban_valid?(String.t()) :: boolean
+  @spec iban_valid?(binary()) :: boolean()
   defdelegate iban_valid?(iban), to: Bankster.Iban, as: :valid?
 
   @doc """
@@ -33,6 +34,6 @@ defmodule Bankster do
       iex> Bankster.iban_validate("DK8387188644726815")
       {:ok, "DK8387188644726815"}
   """
-  @spec iban_validate(String.t()) :: {:ok, String.t()} | {:error, Atom.t()}
+  @spec iban_validate(binary()) :: {:ok, binary()} | {:error, atom()}
   defdelegate iban_validate(iban), to: Bankster.Iban, as: :validate
 end

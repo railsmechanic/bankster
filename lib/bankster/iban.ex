@@ -1,8 +1,10 @@
 defmodule Bankster.Iban do
   @moduledoc """
-  Provides some IBAN related functions.
+  Module provides some IBAN related functions.
   """
 
+  ## -- Module constants
+  # - IBAN Rules
   @iban_rules %{
     "AA" => %{length: 16, rule: ~r/^[0-9A-Z]{12}$/i},
     "AD" => %{length: 24, rule: ~r/^[0-9]{8}[0-9A-Z]{12}$/i},
@@ -122,6 +124,7 @@ defmodule Bankster.Iban do
     "YT" => %{length: 27, rule: ~r/^[0-9]{10}[0-9A-Z]{11}[0-9]{2}$/i}
   }
 
+  # - IBAN replacements
   @replacements %{
     "A" => "10",
     "B" => "11",
@@ -151,6 +154,7 @@ defmodule Bankster.Iban do
     "Z" => "35"
   }
 
+  ## -- Functions
   @doc """
   Formats and returns a given IBAN in compact format.
 
@@ -158,7 +162,7 @@ defmodule Bankster.Iban do
       iex> Bankster.Iban.format_compact("DK8     38 7188 64472     6815   ")
       "DK8387188644726815"
   """
-  @spec format_compact(String.t()) :: String.t()
+  @spec format_compact(binary()) :: binary()
   def format_compact(iban), do: format_default(iban)
 
   @doc """
@@ -168,7 +172,7 @@ defmodule Bankster.Iban do
       iex> Bankster.Iban.format_pretty("DK8387188644726815")
       "DK838 7188 64472 6815"
   """
-  @spec format_pretty(String.t()) :: String.t()
+  @spec format_pretty(binary()) :: binary()
   def format_pretty(iban) do
     ~r/.{1,4}/
     |> Regex.scan(format_default(iban))
@@ -183,7 +187,7 @@ defmodule Bankster.Iban do
       iex> Bankster.Iban.country_code("DK8387188644726815")
       "DK"
   """
-  @spec country_code(String.t()) :: String.t()
+  @spec country_code(binary()) :: binary()
   def country_code(iban) do
     iban
     |> format_default()
@@ -197,7 +201,7 @@ defmodule Bankster.Iban do
       iex> Bankster.Iban.checksum("DK8387188644726815")
       83
   """
-  @spec checksum(String.t()) :: String.t()
+  @spec checksum(binary()) :: binary()
   def checksum(iban) do
     iban
     |> format_default()
@@ -211,7 +215,7 @@ defmodule Bankster.Iban do
       iex> Bankster.Iban.supported_countries()
       ["SM", "KZ", "SN", "BA", "GA", "KW", "MU", ...]
   """
-  @spec supported_countries() :: list(String.t())
+  @spec supported_countries :: list(binary())
   def supported_countries, do: Map.keys(@iban_rules)
 
   @doc """
@@ -224,13 +228,12 @@ defmodule Bankster.Iban do
       iex> Bankster.Iban.supported_country?("XYZ")
       false
   """
-  @spec supported_country?(String.t()) :: boolean
-  def supported_country?(country_code)
-
+  @spec supported_country?(binary()) :: boolean()
   def supported_country?(country_code) when is_binary(country_code),
     do: Map.has_key?(@iban_rules, format_default(country_code))
 
-  def supported_country?(_invalid), do: false
+  def supported_country?(_country_code),
+    do: false
 
   @doc """
   Returns the BBAN of the given IBAN.
@@ -239,7 +242,7 @@ defmodule Bankster.Iban do
       iex> Bankster.Iban.bban("DK8387188644726815")
       "87188644726815"
   """
-  @spec bban(String.t()) :: String.t()
+  @spec bban(binary()) :: binary()
   def bban(iban) do
     iban
     |> format_default()
@@ -253,7 +256,7 @@ defmodule Bankster.Iban do
       iex> Bankster.Iban.size("DK 8387   188644     726815")
       18
   """
-  @spec size(String.t()) :: Integer.t()
+  @spec size(binary()) :: integer()
   def size(iban) do
     iban
     |> format_default()
@@ -273,7 +276,7 @@ defmodule Bankster.Iban do
       iex> Bankster.Iban.validate("DK8387188644726815")
       {:ok, "DK8387188644726815"}
   """
-  @spec validate(String.t()) :: {:ok, String.t()} | {:error, Atom.t()}
+  @spec validate(binary()) :: {:ok, binary()} | {:error, atom()}
   def validate(iban) do
     cond do
       iban_violates_format?(iban) ->
@@ -306,13 +309,12 @@ defmodule Bankster.Iban do
       iex> Bankster.Iban.valid?("DK8387188644726815")
       true
   """
-  @spec valid?(String.t()) :: boolean
-  def valid?(iban), do: match?({:ok, _}, validate(iban))
+  @spec valid?(binary()) :: boolean()
+  def valid?(iban), do: match?({:ok, _iban}, validate(iban))
 
-  ##################################################
-  ## HELPERS
-
-  @spec format_default(String.t()) :: String.t()
+  ## -- Helper functions
+  # - Format a given IBAN in a default format.
+  @spec format_default(binary()) :: binary()
   defp format_default(iban) do
     iban
     |> to_string()
@@ -320,17 +322,23 @@ defmodule Bankster.Iban do
     |> String.upcase()
   end
 
-  @spec iban_violates_format?(String.t()) :: boolean
-  defp iban_violates_format?(iban), do: Regex.match?(~r/[^A-Z0-9]/i, format_default(iban))
+  # - Check whether a given IBAN violates the required format.
+  @spec iban_violates_format?(binary()) :: boolean
+  defp iban_violates_format?(iban),
+    do: Regex.match?(~r/[^A-Z0-9]/i, format_default(iban))
 
-  @spec iban_violates_country?(String.t()) :: boolean
-  defp iban_violates_country?(iban), do: !Map.has_key?(@iban_rules, country_code(iban))
+  # - Check whether a given IBAN violates the supported countries.
+  @spec iban_violates_country?(binary()) :: boolean
+  defp iban_violates_country?(iban),
+    do: !Map.has_key?(@iban_rules, country_code(iban))
 
-  @spec iban_violates_length?(String.t()) :: boolean
+  # - Check whether a given IBAN violates the required length.
+  @spec iban_violates_length?(binary()) :: boolean
   defp iban_violates_length?(iban),
     do: size(iban) != get_in(@iban_rules, [country_code(iban), :length])
 
-  @spec iban_violates_country_rule?(String.t()) :: boolean
+  # - Check whether a given IBAN violates the country rules.
+  @spec iban_violates_country_rule?(binary()) :: boolean
   defp iban_violates_country_rule?(iban) do
     if iban_rule = get_in(@iban_rules, [country_code(iban), :rule]) do
       !Regex.match?(iban_rule, String.slice(format_default(iban), 4..-1//1))
@@ -339,7 +347,8 @@ defmodule Bankster.Iban do
     end
   end
 
-  @spec iban_violates_checksum?(String.t()) :: boolean
+  # - Check whether a given IBAN violates the required checksum.
+  @spec iban_violates_checksum?(binary()) :: boolean
   defp iban_violates_checksum?(iban) do
     remainder =
       for(<<c <- bban(iban) <> country_code(iban) <> "00">>,
