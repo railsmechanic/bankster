@@ -243,7 +243,7 @@ defmodule Bankster.Iban do
   def bban(iban) do
     iban
     |> format_default()
-    |> String.slice(4..-1)
+    |> String.slice(4..-1//1)
   end
 
   @doc """
@@ -333,7 +333,7 @@ defmodule Bankster.Iban do
   @spec iban_violates_country_rule?(String.t()) :: boolean
   defp iban_violates_country_rule?(iban) do
     if iban_rule = get_in(@iban_rules, [country_code(iban), :rule]) do
-      !Regex.match?(iban_rule, String.slice(format_default(iban), 4..-1))
+      !Regex.match?(iban_rule, String.slice(format_default(iban), 4..-1//1))
     else
       false
     end
@@ -342,7 +342,10 @@ defmodule Bankster.Iban do
   @spec iban_violates_checksum?(String.t()) :: boolean
   defp iban_violates_checksum?(iban) do
     remainder =
-      for(<<c <- bban(iban) <> country_code(iban) <> "00">>, into: "", do: @replacements[<<c>>] || <<c>>)
+      for(<<c <- bban(iban) <> country_code(iban) <> "00">>,
+        into: "",
+        do: @replacements[<<c>>] || <<c>>
+      )
       |> String.to_integer()
       |> rem(97)
 
