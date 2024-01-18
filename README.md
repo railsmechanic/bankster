@@ -13,7 +13,7 @@ The package can be installed as Hex package:
 
   ```elixir
   def deps do
-    [{:bankster, "~> 0.3.3"}]
+    [{:bankster, "~> 0.4.0"}]
   end
   ```
 
