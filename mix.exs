@@ -4,8 +4,8 @@ defmodule Bankster.Mixfile do
   def project do
     [
       app: :bankster,
-      version: "0.3.3",
-      elixir: "~> 1.4",
+      version: "0.4.0",
+      elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
