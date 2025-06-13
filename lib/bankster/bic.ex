@@ -14,8 +14,6 @@ defmodule Bankster.Bic do
           branch: binary() | nil
         }
 
-  @bic_regex ~r/^(?<bank>[a-zA-Z]{4})\s*(?<country>[a-zA-Z]{2})\s*(?<location>[0-9a-zA-Z]{2})\s*(?<branch>[0-9a-zA-Z]{3})?$/
-
   @doc """
   Parses a BIC string into its components.
 
@@ -40,7 +38,7 @@ defmodule Bankster.Bic do
   """
   @spec parse(term()) :: {:ok, t()} | :error
   def parse(bic) when is_binary(bic) do
-    case Regex.named_captures(@bic_regex, bic) do
+    case Regex.named_captures(bic_regex(), bic) do
       nil ->
         :error
 
@@ -152,11 +150,15 @@ defmodule Bankster.Bic do
     true
   """
   @spec valid?(binary()) :: boolean()
-  def valid?(bic) when is_binary(bic), do: Regex.match?(@bic_regex, bic)
+  def valid?(bic) when is_binary(bic), do: Regex.match?(bic_regex(), bic)
   def valid?(_), do: false
 
   defp presence(""), do: nil
   defp presence(val), do: val
+
+  defp bic_regex do
+    ~r/^(?<bank>[a-zA-Z]{4})\s*(?<country>[a-zA-Z]{2})\s*(?<location>[0-9a-zA-Z]{2})\s*(?<branch>[0-9a-zA-Z]{3})?$/
+  end
 end
 
 defimpl String.Chars, for: Bankster.Bic do
