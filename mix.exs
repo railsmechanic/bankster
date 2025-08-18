@@ -21,7 +21,7 @@ defmodule Bankster.Mixfile do
 
   defp deps do
     [
-      {:ex_doc, "~> 0.31.1", only: [:dev]},
+      {:ex_doc, "~> 0.38.3", only: [:dev]},
       {:earmark, "~> 1.4.0", only: [:dev]}
     ]
   end
