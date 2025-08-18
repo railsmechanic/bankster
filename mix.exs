@@ -4,7 +4,7 @@ defmodule Bankster.Mixfile do
   def project do
     [
       app: :bankster,
-      version: "0.4.0",
+      version: "0.4.1",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -16,7 +16,9 @@ defmodule Bankster.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [
+      extra_applications: [:logger]
+    ]
   end
 
   defp deps do
