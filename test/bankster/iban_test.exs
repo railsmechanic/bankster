@@ -456,6 +456,16 @@ defmodule Bankster.Iban.IbanTest do
     for iban <- @invalid_ibans, do: assert(Bankster.Iban.valid?(iban) == false)
   end
 
+  test "registry examples for BI, EG, and NI" do
+    assert Bankster.Iban.valid?("BI4210000100010000332045181") == true
+    assert Bankster.Iban.valid?("EG380019000500000000263180002") == true
+    assert Bankster.Iban.valid?("NI45BAPR00000013000003558124") == true
+
+    assert Bankster.Iban.valid?("BI42000000000000") == false
+    assert Bankster.Iban.valid?("EG2100000000000000000000000") == false
+    assert Bankster.Iban.valid?("NI51BAPR111111111111111111111111") == false
+  end
+
   test "validate/1" do
     # Unformated IBANs
     for iban <- @unformated_ibans, do: assert({:ok, _} = Bankster.Iban.validate(iban))
